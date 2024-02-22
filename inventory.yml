@@ -1,0 +1,7 @@
+mattermostserver:
+  hosts:
+    ansible_host: "{{lookup('env', 'MATTERMOST_SERVER')}}"
+  
+    
+   
+
