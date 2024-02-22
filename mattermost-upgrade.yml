@@ -7,11 +7,12 @@
     ansible.builtin.add_host:
       ansible_host: "{{ MATTERMOST_SERVER }}'
       groups: mattermostserver
-      ansible_ssh_user: "{{ ssh_user }}"
+      
       
 - name: upgrade mattermost
   hosts: mattermostserver
   gather_facts: no
+  remote_user: "{{ ssh_user }}"
   become: true
   tasks:
 
