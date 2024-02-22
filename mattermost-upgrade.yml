@@ -1,5 +1,14 @@
 
 ---
+- hosts: "localhost"
+  gather_facts: no
+  tasks:
+  - name: Add host
+    add_host:
+      hostname: "{{ MATTERMOST_SERVER }}"
+      groups: "mattermostserver"
+      ansible_user: "{{ ssh_user }}"
+      
 - name: upgrade mattermost
   hosts: mattermostserver
   gather_facts: no
