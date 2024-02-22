@@ -1,3 +1,4 @@
+...
 mattermostserver:
   hosts:
     ansible_host: "{{ MATTERMOST_SERVER }}"
