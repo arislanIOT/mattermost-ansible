@@ -5,8 +5,8 @@
   tasks:
   - name: Add host
     ansible.builtin.add_host:
-      hostname: "{{ MATTERMOST_SERVER }}"
-      groups: "mattermostserver"
+      ansible_host: "{{ MATTERMOST_SERVER }}'
+      groups: mattermostserver
       ansible_user: "{{ ssh_user }}"
       
 - name: upgrade mattermost
