@@ -1,7 +1,6 @@
-mattermostserver:
-  hosts:
-    ansible_host: "${MATTERMOST_SERVER}"
-    ansible_user: ec2-user
+hosts:
+ ansible_host: "${MATTERMOST_SERVER}"
+ ansible_user: ec2-user
   
     
    
