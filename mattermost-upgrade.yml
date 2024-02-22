@@ -7,7 +7,7 @@
     ansible.builtin.add_host:
       ansible_host: "{{ MATTERMOST_SERVER }}'
       groups: mattermostserver
-      ansible_user: "{{ ssh_user }}"
+      ansible_ssh_user: "{{ ssh_user }}"
       
 - name: upgrade mattermost
   hosts: mattermostserver
