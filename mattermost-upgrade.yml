@@ -12,7 +12,6 @@
 - name: upgrade mattermost
   hosts: mattermostserver
   gather_facts: no
-  remote_user: "{{ ssh_user }}"
   become: true
   tasks:
 
