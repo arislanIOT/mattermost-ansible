@@ -4,7 +4,7 @@
   gather_facts: no
   tasks:
   - name: Add host
-    add_host:
+    ansible.builtin.add_host:
       hostname: "{{ MATTERMOST_SERVER }}"
       groups: "mattermostserver"
       ansible_user: "{{ ssh_user }}"
