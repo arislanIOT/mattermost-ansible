@@ -1,6 +1,7 @@
 mattermostserver:
   hosts:
-    ansible_host: "{{lookup('env', 'MATTERMOST_SERVER')}}"
+    ansible_host: {{ MATTERMOST_SERVER }}
+    ansible_user: ec2-user
   
     
    
