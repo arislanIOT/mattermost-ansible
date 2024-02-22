@@ -3,16 +3,18 @@
 - hosts: "localhost"
   gather_facts: no
   tasks:
-  - name: Add host
+  - name: Adding host
     ansible.builtin.add_host:
-      ansible_host: "{{ MATTERMOST_SERVER }}'
+      hostname: "{{ MATTERMOST_SERVER }}"
       groups: mattermostserver
-      
+
       
 - name: upgrade mattermost
   hosts: mattermostserver
   gather_facts: no
+  remote_user: "{{ ssh_user }}"
   become: true
+
   tasks:
 
   - name: Create Temp Directory
@@ -62,4 +64,3 @@
     ansible.builtin.service:
       name: mattermost
       state: started 
-
