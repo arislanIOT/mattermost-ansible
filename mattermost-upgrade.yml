@@ -1,0 +1,56 @@
+
+---
+- name: upgrade mattermost
+  hosts: mattermostserver
+  gather_facts: no
+  become: true
+  tasks:
+
+  - name: Create Temp Directory
+    ansible.builtin.file:
+      path: /tmp/mattermost
+      state: directory
+  
+  - name: Untar the package
+    ansible.builtin.unarchive:
+      src: https://releases.mattermost.com/{{ mattermost_version }}/mattermost-{{ mattermost_version }}-linux-amd64.tar.gz
+      dest: /tmp/mattermost
+      remote_src: yes
+      extra_opts:
+      - --transform 
+      - 's,^[^/]\+,\0-upgrade,'
+
+  - name: Stop Mattermost Service
+    ansible.builtin.service:
+      name: mattermost
+      state: stopped 
+
+  - name: Backup current mattermost
+    ansible.builtin.copy: 
+      src: /opt/mattermost
+      dest: /opt/mattermostbackup-latest/
+      remote_src: yes
+      mode: preserve
+      
+
+  - name: Remove old files except data and  config
+    ansible.builtin.shell: 
+      cmd: |
+       find mattermost/ mattermost/client/ -mindepth 1 -maxdepth 1 \! \( -type d \( -path mattermost/client -o -path mattermost/client/plugins -o -path mattermost/config -o -path mattermost/logs -o -path mattermost/plugins -o -path mattermost/data -o -path  mattermost/yourFolderHere \) -prune \) | sort | sudo xargs rm -r
+      chdir: /opt
+
+  - name: Copy latest version to current 
+    ansible.builtin.shell:
+      cmd: cp -an /tmp/mattermost/mattermost-upgrade/. mattermost/
+      chdir: /opt
+    
+  - name: Changing OwnerShip of Dir
+    ansible.builtin.shell:
+      cmd: chown -R mattermost:mattermost mattermost
+      chdir: /opt
+
+  - name: Start Mattermost Service
+    ansible.builtin.service:
+      name: mattermost
+      state: started 
+
